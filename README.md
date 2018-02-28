@@ -21,32 +21,34 @@ This guide will demonstrate how to get a `Hello World` example working with Alex
 There are a lot of moving parts when working with Alexa and it can get confusing at times. Please always keep the following in perspective when developing for Alexa:
 
 ```
-Users makes 
+Users makes
 ```
 
 ## Setup
+To register the Amazon Echo device, an Amazon account is required. Either use your existing Amazon account or create a new one (using your Insum email address).
+
+Follow the [instructions](https://www.amazon.com/gp/help/customer/display.html?nodeId=202189140) to set up the device.  A phone or tablet will be required for this process.
+
+> **NOTE** The language setting determines what skills are available to the device. Be sure to select a matching language when creating a skill.
 
 ### Alexa Developer Account
 
-Go to [developer.amazon.com](https://developer.amazon.com/). Either use your existing Amazon account or create a new one (using your insum.ca address).
+Go to [developer.amazon.com](https://developer.amazon.com/). Use your Amazon account to sign in.
 
 ### AWS Developer console
 
-Go to [AWS](aws.amazon.com/free) and click `Create a Free Account` 
-
-
-
+Amazon Web Services (AWS) Free Tier account offers several forever-free services and some premium features free for one year. To learn more and sign up, go to [AWS](https://aws.amazon.com/free) and click `Create a Free Account`. You may use the same Amazon account to sign up.
 
 ### Links
 
 Title | Description
 --- | ---
-[Alexa Developer Home](https://developer.amazon.com/alexa) | 
+[Alexa Developer Home](https://developer.amazon.com/alexa) |
 [Skills Console](https://developer.amazon.com/alexa/console/ask) | Build, manage, test skills
 
 ## Definitions
 
-It's important to understand Alexa's terminology. Below is a brief overview of some key terminology. For a more complete overview read [this](https://medium.com/@screenmedia/utterances-slots-and-skills-the-new-vocabulary-needed-to-develop-for-voice-7428bff4ed79) article.
+It's important to understand Alexa's terminology. Below is a brief overview of some key terminology. For a more complete overview read this [article](https://medium.com/@screenmedia/utterances-slots-and-skills-the-new-vocabulary-needed-to-develop-for-voice-7428bff4ed79).
 
 Term | Description | Example
 --- | --- | ---
