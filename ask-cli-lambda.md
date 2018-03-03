@@ -16,9 +16,9 @@ Amazon provides a command line interface (CLI) tool for working with many of its
 [AWS Lambda](https://aws.amazon.com/lambda/) is a [serveless computing](https://en.wikipedia.org/wiki/Serverless_computing) service that allows developers to deploy and run code on the web without needing to manage any server infrastructure. They can be implemented using a variety of programming languages including Node.js, Java, C#, Go and Python.
 
 The ASK CLI provides a convenient utility to generate and create the artifacts for an Alexa skill:
-> a. Skills manifest
-> b. Interaction model
-> c. AWS Lambda
+> - Skills manifest
+> - Interaction model
+> - AWS Lambda
 
 ### Install AWS Command Line Interface
 
@@ -43,7 +43,7 @@ Next, head over the [AWS Console](https://aws.amazon.com/console/). You will nee
 5. Click the`Policies` item on the left navigation menu.
 6. Click the`Create policy` button.
 7. Click the `JSON` tab.
-8. Copy the contents from the file `resources/aws-lambda-deployer-iam-policy.json` and paste into the text editor.
+8. Copy the contents from the file [`resources/aws-lambda-deployer-iam-policy.json`](resources/aws-lambda-deployer-iam-policy.json) and paste into the text editor.
 9. Click the `Review policy` button.
 10. Enter the policy name, e.g. `AskLambdaDeployer`.
 11. Click the 'Create policy'.
