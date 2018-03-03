@@ -33,8 +33,8 @@ aws-cli/1.14.50 Python/2.7.14 Windows/10 botocore/1.9.3
 ### IAM Users and Policies
 
 Next, head over the [AWS Console](https://aws.amazon.com/console/). You will need to:
-> a. Create an IAM policy for ASK to deploy AWS Lambda functions.
-> b. Create an IAM user and assign the ASK Lambda Deploy policy.
+> - Create an IAM policy for ASK to deploy AWS Lambda functions.
+> - Create an IAM user and assign the ASK Lambda Deploy policy.
 
 1. Click on any of the `Sign In to the Console` buttons.
 2. Login using the "Root user" (the Amazon account used to sign up for AWS services).
