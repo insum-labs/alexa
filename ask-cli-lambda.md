@@ -115,7 +115,7 @@ Skill deployment finished.
 Model deployment finished.
 Lambda deployment finished.
 ```
-9. Enable the skill:
+9. Enable the skill. The skill ID can also be obtained from the file `.ask/config` in your project directory.
 ```
 $ ask api enable-skill -s amzn1.ask.skill.3b9e6eec-b445-4e77-a441-202252f1c54d
 The skill has been enabled.
