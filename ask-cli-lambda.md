@@ -46,7 +46,7 @@ Next, head over the [AWS Console](https://aws.amazon.com/console/). You will nee
 8. Copy the contents from the file [`resources/aws-lambda-deployer-iam-policy.json`](resources/aws-lambda-deployer-iam-policy.json) and paste into the text editor.
 9. Click the `Review policy` button.
 10. Enter the policy name, e.g. `AskLambdaDeployer`.
-11. Click the 'Create policy'.
+11. Click the `Create policy`.
 12. After the policy has been created successfully, click on the `Users` item on the left navigation menu.
 13. Click the `Add user` button.
 14. Enter a user name and select `Programmatic access` for `Access type`.
