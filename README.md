@@ -16,13 +16,16 @@ Help guide on Amazon Alexa for Hackathon 2018
 
 ## About
 
-This guide will demonstrate how to get a `Hello World` example working with Alexa using multiple techniques. The focus of this guide is for Insum's internal Hackathon 2018 but can be used/leveraged for other purposes. This guide won't walk you through all the different options/posiblities of the Alexa API.
+This guide will demonstrate how to get a `Hello World` example working with Alexa using multiple techniques. The focus of this guide is for Insum's internal Hackathon 2018 but can be used/leveraged for other purposes. This guide won't walk you through all the different options/possibilities of the Alexa API.
 
 There are a lot of moving parts when working with Alexa and it can get confusing at times. Please always keep the following in perspective when developing for Alexa:
 
-```
-Users makes
-```
+- User "asks" Echo something
+  - This request is sent to Alexa (i.e. Amazon's servers)
+- Alexa analyzes request
+  - Alexa makes a REST request to a server of your choice
+  - Your RESTful service processes request from Alexa then sends a response back to her
+- Alexa sends text back to Echo device, and Echo says the response
 
 ## Setup
 To register the Amazon Echo device, an Amazon account is required. Either use your existing Amazon account or create a new one (using your Insum email address).
@@ -36,6 +39,8 @@ Follow the [instructions](https://www.amazon.com/gp/help/customer/display.html?n
 Go to [developer.amazon.com](https://developer.amazon.com/). Use your Amazon account to sign in.
 
 ### AWS Developer console
+
+TODO: we may not need this
 
 Amazon Web Services (AWS) Free Tier account offers several forever-free services and some premium features free for one year. To learn more and sign up, go to [AWS](https://aws.amazon.com/free) and click `Create a Free Account`. You may use the same Amazon account to sign up.
 
