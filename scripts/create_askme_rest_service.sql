@@ -24,7 +24,7 @@ begin
     , p_comments => null
   );
 
-    ords.define_handler(
+  ords.define_handler(
     p_module_name => 'askme.v1'
     , p_pattern => 'sayHello'
     , p_method => 'POST'
@@ -45,12 +45,12 @@ begin
     , p_response => l_response
   );
 
-  if l_status_code = askme.gc_status_ok then
+  if l_status_code = alexa.gc_status_ok then
     owa_util.status_line(nstatus => l_status_code);
     sys.htp.p(l_response);
   else
-    owa_util.status_line(nstatus => l_status_code, creason => l_message);
-    sys.htp.p('');
+    owa_util.status_line(nstatus => l_status_code);
+    sys.htp.p(l_message);
   end if;
 end;
     ~'

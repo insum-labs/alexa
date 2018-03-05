@@ -1,71 +1,5 @@
 create or replace package body askme
 as
-
-  /**
-   * Converts blob to clob
-   *
-   * Notes:
-   *  - Copied from http://stackoverflow.com/questions/12849025/convert-blob-to-clob
-   *  - From OOS_UTIL_LOB
-   *
-   * @issue #1
-   *
-   * declare
-   *   l_blob blob;
-   *   l_clob clob;
-   * begin
-   *   l_clob := oos_util_lob.blob2clob(l_blob);
-   * end;
-   *
-   * @author Martin D'Souza
-   * @created 02-Mar-2014
-   * @param p_blob blob to be converted to clob
-   * @param p_blob_csid Encoding to use. See https://docs.oracle.com/database/121/NLSPG/ch2charset.htm#NLSPG169 (table 2-4) for different charsets. Can use `nls_charset_id(<charset>)` to get the clob_csid
-   * @return clob
-   */
-  function blob2clob(
-    p_blob in blob,
-    p_blob_csid in integer default dbms_lob.default_csid)
-    return clob
-  as
-    l_clob clob;
-    l_dest_offset integer := 1;
-    l_src_offset integer := 1;
-    l_lang_context integer := dbms_lob.default_lang_ctx;
-    l_warning integer;
-  begin
-    if p_blob is null then
-      return null;
-    end if;
-
-    dbms_lob.createtemporary(
-      lob_loc => l_clob,
-      cache => false);
-
-    dbms_lob.converttoclob(
-      dest_lob => l_clob,
-      src_blob => p_blob,
-      amount => dbms_lob.lobmaxsize,
-      dest_offset => l_dest_offset,
-      src_offset => l_src_offset,
-      blob_csid => p_blob_csid,
-      lang_context => l_lang_context,
-      warning => l_warning);
-
-    return l_clob;
-  end blob2clob;
-
-  function is_request_valid(
-    p_amazon_skill_id varchar2
-  ) return boolean
-  as
-    l_result boolean;
-  begin
-    l_result := p_amazon_skill_id = askme.gc_amazon_skill_id;
-    return l_result;
-  end is_request_valid;
-
-  --
   function generate_response(
     p_text in varchar2
     , p_end_session in boolean default false
@@ -143,42 +77,47 @@ as
 
     invalid_skill exception;
   begin
-    apex_json.parse(p_values => l_payload, p_source => blob2clob(p_payload));
+    apex_json.parse(p_values => l_payload, p_source => alexa.blob2clob(p_payload));
 
-    if not is_request_valid(
-      p_amazon_skill_id => apex_json.get_varchar2(
-        p_path => 'session.application.applicationId'
-      , p_values => l_payload
-      )
+    if not alexa.is_request_valid(
+      p_amazon_skill_id => alexa.get_amazon_skill_id(l_payload)
     ) then
       raise invalid_skill;
     end if;
 
-    l_request_type := apex_json.get_varchar2(
-      p_path => 'request.type'
-      , p_values => l_payload
-    );
+    l_request_type := alexa.get_request_type(l_payload);
 
     case
-      when l_request_type = 'LaunchRequest' then
-        l_response := generate_response('Launched Oracle Machine');
-      when l_request_type = 'IntentRequest' then
-        l_intent := apex_json.get_varchar2(
-          p_path => 'request.intent.name'
-          , p_values => l_payload
+      when l_request_type = alexa.gc_launch_request then
+        l_response := alexa.generate_response(
+          p_output_speech => t_alexa_output_speech(
+            output_speech_type => alexa.gc_ssml_speech_type
+            , text => null
+            , ssml => '<speak>Launched Oracle Machine</speak>'
+          )
         );
+      when l_request_type = alexa.gc_intent_request then
+        l_intent := alexa.get_intent(l_payload);
         case
           when l_intent = 'HelloWorldIntent' then
-            l_response := generate_response('Hello from APEX!', true);
+            -- l_response := generate_response('Hello from APEX!', true);
+            l_response := alexa.generate_response(
+              p_output_speech => t_alexa_output_speech(
+                output_speech_type => alexa.gc_plaintext_speech_type
+                , text => 'Hello from APEX!'
+                , ssml => null
+              )
+              , p_end_session => true
+            );
           when l_intent = 'MyNameIsIntent' then
             l_name := apex_json.get_varchar2(
               p_path => 'request.intent.slots.name.value'
               , p_values => l_payload
             );
             l_response := generate_response('Hello ' || coalesce(l_name, 'Anonymous') || '. I am the Oracle.', true);
-          when l_intent in ('AMAZON.HelpIntent') then
+          when l_intent in (alexa.gc_help_intent) then
             l_response := generate_response('Ask me to say hello, or tell me your name.');
-          when l_intent in ('AMAZON.CancelIntent', 'AMAZON.StopIntent') then
+          when l_intent in (alexa.gc_cancel_intent, alexa.gc_stop_intent) then
             l_response := generate_response('Goodbye!');
           else
             l_response := generate_response('Invalid intent: ' || l_intent);
@@ -187,15 +126,15 @@ as
         l_response := generate_response('Invalid request type: ' || l_request_type);
     end case;
 
-    p_status_code := askme.gc_status_ok;
+    p_status_code := alexa.gc_status_ok;
     p_response := l_response;
   exception
     when invalid_skill then
-      p_status_code := askme.gc_status_unauthorized;
+      p_status_code := alexa.gc_status_unauthorized;
       p_message := 'Skill validation failed';
     when others then
-      p_status_code := askme.gc_status_error;
-      p_message := 'General error';
+      p_status_code := alexa.gc_status_error;
+      p_message := dbms_utility.format_error_backtrace;
   end process_request;
 end askme;
 /
