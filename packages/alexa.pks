@@ -42,7 +42,7 @@ as
   ) return varchar2;
 
   function generate_response(
-    p_output_speech in t_alexa_output_speech
+    p_output_speech in t_alexa_output_speech default null
     , p_reprompt in t_alexa_output_speech default null
     , p_card in t_alexa_card default null
     , p_end_session in boolean default false

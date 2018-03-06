@@ -1,67 +1,5 @@
 create or replace package body askme
 as
-  function generate_response(
-    p_text in varchar2
-    , p_end_session in boolean default false
-  ) return clob
-  as
-    l_response clob;
-  begin
-    apex_json.initialize_clob_output;
-
-    apex_json.open_object;
-
-    apex_json.write(
-      p_name => 'version'
-      , p_value => '1.0'
-    );
-
-    apex_json.open_object(
-      p_name => 'sessionAttributes'
-    );
-    apex_json.close_object;
-
-    apex_json.open_object(
-      p_name => 'response'
-    );
-
-    apex_json.open_object(
-      p_name => 'outputSpeech'
-    );
-
-    apex_json.write(
-      p_name => 'type'
-      , p_value => 'PlainText'
-    );
-
-    apex_json.write(
-      p_name => 'text'
-      , p_value => p_text
-    );
-
-    apex_json.write(
-      p_name => 'ssml'
-      , p_value => replace('<speak>#TEXT#</speak>', '#TEXT#', p_text)
-    );
-
-    apex_json.close_object;
-
-    apex_json.write(
-      p_name => 'shouldEndSession'
-      , p_value => p_end_session
-    );
-
-    apex_json.close_object;
-
-    apex_json.close_object;
-
-    l_response := apex_json.get_clob_output;
-
-    apex_json.free_output;
-
-    return l_response;
-  end generate_response;
-
   procedure process_request(
     p_payload in blob
     , p_status_code out number
@@ -76,6 +14,8 @@ as
     l_response clob;
 
     invalid_skill exception;
+    invalid_request_type exception;
+    invalid_intent exception;
   begin
     apex_json.parse(p_values => l_payload, p_source => alexa.blob2clob(p_payload));
 
@@ -93,14 +33,18 @@ as
           p_output_speech => t_alexa_output_speech(
             output_speech_type => alexa.gc_ssml_speech_type
             , text => null
-            , ssml => '<speak>Launched Oracle Machine</speak>'
+            , ssml => '<speak>Oracle Machine is ready. Ask me to say hello, or tell me your name.</speak>'
           )
+          , p_reprompt => t_alexa_output_speech(
+              output_speech_type => alexa.gc_ssml_speech_type
+              , text => null
+              , ssml => '<speak>Ask me to say hello, or tell me your name.</speak>'
+            )
         );
       when l_request_type = alexa.gc_intent_request then
         l_intent := alexa.get_intent(l_payload);
         case
           when l_intent = 'HelloWorldIntent' then
-            -- l_response := generate_response('Hello from APEX!', true);
             l_response := alexa.generate_response(
               p_output_speech => t_alexa_output_speech(
                 output_speech_type => alexa.gc_plaintext_speech_type
@@ -114,16 +58,39 @@ as
               p_path => 'request.intent.slots.name.value'
               , p_values => l_payload
             );
-            l_response := generate_response('Hello ' || coalesce(l_name, 'Anonymous') || '. I am the Oracle.', true);
+            l_response := alexa.generate_response(
+              p_output_speech => t_alexa_output_speech(
+                output_speech_type => alexa.gc_plaintext_speech_type
+                , text => 'Hello ' || coalesce(l_name, 'Anonymous') || '. I am the Oracle.'
+                , ssml => null
+              )
+              , p_end_session => true
+            );
           when l_intent in (alexa.gc_help_intent) then
-            l_response := generate_response('Ask me to say hello, or tell me your name.');
+            l_response := alexa.generate_response(
+              p_output_speech => t_alexa_output_speech(
+                output_speech_type => alexa.gc_plaintext_speech_type
+                , text => 'Ask me to say hello, or tell me your name.'
+                , ssml => null
+              )
+              , p_end_session => false
+            );
           when l_intent in (alexa.gc_cancel_intent, alexa.gc_stop_intent) then
-            l_response := generate_response('Goodbye!');
+            l_response := alexa.generate_response(
+              p_output_speech => t_alexa_output_speech(
+                output_speech_type => alexa.gc_plaintext_speech_type
+                , text => 'Goodbye!'
+                , ssml => null
+              )
+              , p_end_session => true
+            );
           else
-            l_response := generate_response('Invalid intent: ' || l_intent);
+            raise invalid_intent;
         end case;
+      when l_request_type = alexa.gc_session_ended_request then
+        l_response := alexa.generate_response(p_end_session => true);
       else
-        l_response := generate_response('Invalid request type: ' || l_request_type);
+        raise invalid_request_type;
     end case;
 
     p_status_code := alexa.gc_status_ok;
@@ -132,6 +99,12 @@ as
     when invalid_skill then
       p_status_code := alexa.gc_status_unauthorized;
       p_message := 'Skill validation failed';
+    when invalid_request_type then
+      p_status_code := alexa.gc_status_bad_request;
+      p_message := 'Invalid request type: ' || l_request_type;
+    when invalid_intent then
+      p_status_code := alexa.gc_status_bad_request;
+      p_message := 'Invalid intent: ' || l_intent;
     when others then
       p_status_code := alexa.gc_status_error;
       p_message := dbms_utility.format_error_backtrace;

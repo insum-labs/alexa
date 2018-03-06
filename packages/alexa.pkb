@@ -98,7 +98,7 @@ as
   end get_intent;
 
   function generate_response(
-    p_output_speech in t_alexa_output_speech
+    p_output_speech in t_alexa_output_speech default null
     , p_reprompt in t_alexa_output_speech default null
     , p_card in t_alexa_card default null
     , p_end_session in boolean default false
@@ -133,44 +133,51 @@ as
         p_name => 'outputSpeech'
       );
 
-      if p_output_speech.output_speech_type = alexa.gc_plaintext_speech_type then
-        apex_json.write(
-          p_name => 'type'
-          , p_value => alexa.gc_plaintext_speech_type
-        );
+      apex_json.write(
+        p_name => 'type'
+        , p_value => p_output_speech.output_speech_type
+      );
 
-        apex_json.write(
-          p_name => 'text'
-          , p_value => p_output_speech.text
-        );
-      elsif p_output_speech.output_speech_type = alexa.gc_ssml_speech_type then
-        apex_json.write(
-          p_name => 'type'
-          , p_value => alexa.gc_ssml_speech_type
-        );
+      apex_json.write(
+        p_name => case when p_output_speech.output_speech_type = alexa.gc_ssml_speech_type then 'ssml' else 'text' end
+        , p_value =>
+            case
+              when p_output_speech.output_speech_type = alexa.gc_ssml_speech_type then p_output_speech.ssml
+              else p_output_speech.text
+            end
+      );
 
-        apex_json.write(
-          p_name => 'ssml'
-          , p_value => p_output_speech.ssml
-        );
-      else
-        raise not_implemented;
-      end if;
-
-      -- apex_json.write(
-      --   p_name => 'ssml'
-      --   , p_value => replace('<speak>#TEXT#</speak>', '#TEXT#', p_text)
-      -- );
-    else
-      raise input_error;
+      apex_json.close_object;
     end if;
-
-    apex_json.close_object;
     -- outputSpeech - END
 
     -- reprompt
     if p_reprompt is not null then
-      raise not_implemented;
+      apex_json.open_object(
+        p_name => 'reprompt'
+      );
+
+      apex_json.open_object(
+        p_name => 'outputSpeech'
+      );
+
+      apex_json.write(
+        p_name => 'type'
+        , p_value => p_reprompt.output_speech_type
+      );
+
+      apex_json.write(
+        p_name => case when p_reprompt.output_speech_type = alexa.gc_ssml_speech_type then 'ssml' else 'text' end
+        , p_value =>
+            case
+              when p_reprompt.output_speech_type = alexa.gc_ssml_speech_type then p_reprompt.ssml
+              else p_reprompt.text
+            end
+      );
+
+      apex_json.close_object;
+
+      apex_json.close_object;
     end if;
     -- reprompt - END
 
