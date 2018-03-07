@@ -1,24 +1,24 @@
 create or replace package alexa
 as
-  gc_status_ok number(3) := 200;
-  gc_status_bad_request number(3) := 400;
-  gc_status_unauthorized number(3) := 403;
-  gc_status_error number(3) := 500;
+  gc_status_ok constant number(3) := 200;
+  gc_status_bad_request constant number(3) := 400;
+  gc_status_unauthorized constant number(3) := 403;
+  gc_status_error constant number(3) := 500;
 
-  gc_launch_request varchar2(13) := 'LaunchRequest';
-  gc_intent_request varchar2(13) := 'IntentRequest';
-  gc_session_ended_request varchar2(19) := 'SessionEndedRequest';
+  gc_launch_request constant varchar2(13) := 'LaunchRequest';
+  gc_intent_request constant varchar2(13) := 'IntentRequest';
+  gc_session_ended_request constant varchar2(19) := 'SessionEndedRequest';
 
-  gc_cancel_intent varchar2(19) := 'AMAZON.CancelIntent';
-  gc_stop_intent varchar2(17) := 'AMAZON.StopIntent';
-  gc_help_intent varchar2(17) := 'AMAZON.HelpIntent';
+  gc_cancel_intent constant varchar2(19) := 'AMAZON.CancelIntent';
+  gc_stop_intent constant varchar2(17) := 'AMAZON.StopIntent';
+  gc_help_intent constant varchar2(17) := 'AMAZON.HelpIntent';
 
-  gc_plaintext_speech_type varchar2(9) := 'PlainText';
-  gc_ssml_speech_type varchar2(4) := 'SSML';
+  gc_plaintext_speech_type constant varchar2(9) := 'PlainText';
+  gc_ssml_speech_type constant varchar2(4) := 'SSML';
 
-  gc_simple_card_type varchar2(6) := 'Simple';
-  gc_standard_card_type varchar2(8) := 'Standard';
-  gc_linkaccount_card_type varchar2(11) := 'LinkAccount';
+  gc_simple_card_type constant varchar2(6) := 'Simple';
+  gc_standard_card_type constant varchar2(8) := 'Standard';
+  gc_linkaccount_card_type constant varchar2(11) := 'LinkAccount';
 
   function blob2clob(
     p_blob in blob
@@ -26,7 +26,8 @@ as
   ) return clob;
 
   function is_request_valid(
-    p_amazon_skill_id varchar2
+    p_input_skill_id varchar2
+    , p_amazon_skill_id varchar2
   ) return boolean;
 
   function get_amazon_skill_id(

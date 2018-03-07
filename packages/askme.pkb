@@ -20,7 +20,8 @@ as
     apex_json.parse(p_values => l_payload, p_source => alexa.blob2clob(p_payload));
 
     if not alexa.is_request_valid(
-      p_amazon_skill_id => alexa.get_amazon_skill_id(l_payload)
+      p_input_skill_id => alexa.get_amazon_skill_id(l_payload)
+      , p_amazon_skill_id => askme.gc_amazon_skill_id
     ) then
       raise invalid_skill;
     end if;

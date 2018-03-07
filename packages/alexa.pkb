@@ -55,12 +55,13 @@ as
   end blob2clob;
 
   function is_request_valid(
-    p_amazon_skill_id varchar2
+    p_input_skill_id varchar2
+    , p_amazon_skill_id varchar2
   ) return boolean
   as
     l_result boolean;
   begin
-    l_result := p_amazon_skill_id = askme.gc_amazon_skill_id;
+    l_result := p_input_skill_id = p_amazon_skill_id;
     return l_result;
   end is_request_valid;
 
