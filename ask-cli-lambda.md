@@ -26,7 +26,7 @@ For this to work, you must first install and configure the [AWS CLI](https://aws
 
 Test your AWS CLI installation:
 ```
-$ aws configure
+$ aws --version
 aws-cli/1.14.50 Python/2.7.14 Windows/10 botocore/1.9.3
 ```
 
