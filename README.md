@@ -10,6 +10,7 @@ Help guide on Amazon Alexa for Hackathon 2018
   - [Setup](#setup)
     - [Alexa Developer Account](#alexa-developer-account)
     - [AWS Developer console](#aws-developer-console)
+    - [ASK CLI](#ask-cli)
     - [Links](#links)
   - [Definitions](#definitions)
 
@@ -53,6 +54,11 @@ An alternative is to use one already setup for you. Just ask Martin D to give yo
 
 _Note: If you using one provided by Martin, don't create a Bitcoin miner as it's coming off my credit card :-)_
 
+### ASK CLI
+
+If you'd like to use the Alexa Skill Kit (ASK) cli to manage and deploy your skills you can install everything yourself [here](https://developer.amazon.com/docs/smapi/quick-start-alexa-skills-kit-command-line-interface.html).
+
+There is also a docker container with everything built in for you [here](https://github.com/martindsouza/docker-amazon-ask-cli)
 
 ### Links
 
@@ -71,5 +77,5 @@ Term | Description | Example
 Skill | "App" for Alexa | Complete list of Alexa skills [here](https://www.amazon.com/b?node=13727921011). Each one of them are skills.
 [Invocation](https://developer.amazon.com/docs/custom-skills/choose-the-invocation-name-for-a-custom-skill.html) | Trigger word for skill | ["Alexa, ask CBC for help"](https://www.amazon.com/gp/product/B07743SCXC?ref=skillrw_dsk_pnps_dp_2) In this case the invocation is `CBC`. For custom skills invocations should be 2 or more words.
 [Utterance](https://developer.amazon.com/docs/custom-skills/best-practices-for-sample-utterances-and-custom-slot-type-values.html) | What follows an invocation to determine intent | "Alexa, ask CBC for help". In this case `for help` would be the utterance. An intent can have multiple utterances.
-[Intent](https://developer.amazon.com/docs/custom-skills/use-the-skill-builder-beta-to-define-intents-slots-and-dialogs.html#intents-and-slots) | What user is requesting / function to perform based on the utterance.| "Alexa what is the weather" - the intent is to find the weather. This is not a "text" thing, rather the function to call for a given Utterance.
+[Intent](https://developer.amazon.com/docs/custom-skills/use-the-skill-builder-beta-to-define-intents-slots-and-dialogs.html#intents-and-slots) | What user is requesting / function to perform based on the utterance. | "Alexa what is the weather" - the intent is to find the weather. This is not a "text" thing, rather the function to call for a given Utterance.
 Slot | TODO | TODO
