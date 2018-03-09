@@ -66,6 +66,7 @@ Title | Description
 --- | ---
 [Alexa Developer Home](https://developer.amazon.com/alexa) |
 [Skills Console](https://developer.amazon.com/alexa/console/ask) | Build, manage, test skills
+[Glitch](https://glitch.com/) | Create node.js apps online. No need to host your own server / manage https certificate. If you use this, sure to set the certificate type to Wildcard in the Endpoint definition.
 
 ## Definitions
 
