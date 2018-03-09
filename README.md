@@ -6,6 +6,7 @@ Help guide on Amazon Alexa for Hackathon 2018
 
 - [Alexa](#alexa)
   - [About](#about)
+    - [How Alexa Works](#how-alexa-works)
   - [Setup](#setup)
     - [Alexa Developer Account](#alexa-developer-account)
     - [AWS Developer console](#aws-developer-console)
@@ -19,6 +20,12 @@ Help guide on Amazon Alexa for Hackathon 2018
 This guide will demonstrate how to get a `Hello World` example working with Alexa using multiple techniques. The focus of this guide is for Insum's internal Hackathon 2018 but can be used/leveraged for other purposes. This guide won't walk you through all the different options/possibilities of the Alexa API.
 
 There are a lot of moving parts when working with Alexa and it can get confusing at times. Please always keep the following in perspective when developing for Alexa:
+
+### How Alexa Works
+
+This is a very simplified diagram of how Alexa works. A text description follows. If you ever get confused, always refer back to this diagram.
+
+![](resources/alexa-diagram.png)
 
 - User "asks" Echo something
   - This request is sent to Alexa (i.e. Amazon's servers)
@@ -40,9 +47,12 @@ Go to [developer.amazon.com](https://developer.amazon.com/). Use your Amazon acc
 
 ### AWS Developer console
 
-TODO: we may not need this
+If you'd like to use [Lambda](https://aws.amazon.com/lambda/) you can either create and manage your own account and [IAM](https://aws.amazon.com/iam/) setup. More information can be found in the [`asl-cli-lambda.md'](asl-cli-lambda.md) document. 
 
-Amazon Web Services (AWS) Free Tier account offers several forever-free services and some premium features free for one year. To learn more and sign up, go to [AWS](https://aws.amazon.com/free) and click `Create a Free Account`. You may use the same Amazon account to sign up.
+An alternative is to use one already setup for you. Just ask Martin D to give you a `Access ID` and a `Secret Access Key`. 
+
+_Note: If you using one provided by Martin, don't create a Bitcoin miner as it's coming off my credit card :-)_
+
 
 ### Links
 
@@ -60,6 +70,6 @@ Term | Description | Example
 [Wake Word](https://www.amazon.com/gp/help/customer/display.html?nodeId=201971890) | What Alexa "listens to" before taking an action. In most cases it will be `Alexa` but can be configured to `Amazon` or `Echo`. | **Alexa** what time is it. In this example `Alexa` is the wake word.
 Skill | "App" for Alexa | Complete list of Alexa skills [here](https://www.amazon.com/b?node=13727921011). Each one of them are skills.
 [Invocation](https://developer.amazon.com/docs/custom-skills/choose-the-invocation-name-for-a-custom-skill.html) | Trigger word for skill | ["Alexa, ask CBC for help"](https://www.amazon.com/gp/product/B07743SCXC?ref=skillrw_dsk_pnps_dp_2) In this case the invocation is `CBC`. For custom skills invocations should be 2 or more words.
-[Intent](https://developer.amazon.com/docs/custom-skills/use-the-skill-builder-beta-to-define-intents-slots-and-dialogs.html#intents-and-slots) | What user is requesting / function to perform | "Alexa what is the weather" - the intent is to find the weather
 [Utterance](https://developer.amazon.com/docs/custom-skills/best-practices-for-sample-utterances-and-custom-slot-type-values.html) | What follows an invocation to determine intent | "Alexa, ask CBC for help". In this case `for help` would be the utterance. An intent can have multiple utterances.
+[Intent](https://developer.amazon.com/docs/custom-skills/use-the-skill-builder-beta-to-define-intents-slots-and-dialogs.html#intents-and-slots) | What user is requesting / function to perform based on the utterance.| "Alexa what is the weather" - the intent is to find the weather. This is not a "text" thing, rather the function to call for a given Utterance.
 Slot | TODO | TODO
