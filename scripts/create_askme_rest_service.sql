@@ -3,7 +3,7 @@ begin
   ords.enable_schema(
     p_enabled => true
     , p_url_mapping_type => 'BASE_PATH'
-    , p_url_mapping_pattern => 'alexa'
+    , p_url_mapping_pattern => lower(user) || '-alexa'
     , p_auto_rest_auth => false
   );
 
