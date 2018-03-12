@@ -16,7 +16,7 @@ The package `alexa` is very basic toolkit to decipher the request from Alexa and
 * `alexa.generate_response` - Generates the response JSON.
 
 ## The REST Data Service
-A single POST handler is probably sufficient in most cases since the JSON payload contains the necessary details about the request from Alexa. The sample [script](../scripts/create_askme_rest_service.sql) will do the following:
+A single POST handler is probably sufficient in most cases since the JSON payload contains the necessary details about the request from Alexa. The sample [script](scripts/create_askme_rest_service.sql) will do the following:
 
 1. Enable the current schema for ORDS and sets the base path to `<USER>-alexa`. You may change these, but it must be unique.
 2. Creates a module. Customise the module name and base path, e.g. `askme.v1` (v1 is not required, but useful for versioning the API) and `/askme/v1/`.
@@ -41,7 +41,7 @@ For example:
 $ ask new --skill-name AskmeBot
 ```
 
-2. Update the skills manifest (`skill.json`) and make sure it contains the endpoint information (credit: @tschf):
+2. Update the skills manifest (`skill.json`) and make sure it contains the endpoint information (credit: [@tschf](https://github.com/tschf)):
 ```
 {
   "manifest": {
