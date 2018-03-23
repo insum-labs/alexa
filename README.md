@@ -2,17 +2,17 @@
 
 Help guide on Amazon Alexa for Hackathon 2018
 
-<!-- TOC -->
+<!-- TOC depthFrom:2 -->
 
-- [Alexa](#alexa)
-  - [About](#about)
-    - [How Alexa Works](#how-alexa-works)
-  - [Setup](#setup)
-    - [Alexa Developer Account](#alexa-developer-account)
-    - [AWS Developer console](#aws-developer-console)
-    - [ASK CLI](#ask-cli)
-    - [Links](#links)
-  - [Definitions](#definitions)
+- [About](#about)
+  - [FAQ](#faq)
+  - [How Alexa Works](#how-alexa-works)
+- [Setup](#setup)
+  - [Alexa Developer Account](#alexa-developer-account)
+  - [AWS Developer console](#aws-developer-console)
+  - [ASK CLI](#ask-cli)
+  - [Links](#links)
+- [Definitions](#definitions)
 
 <!-- /TOC -->
 
@@ -21,6 +21,10 @@ Help guide on Amazon Alexa for Hackathon 2018
 This guide will demonstrate how to get a `Hello World` example working with Alexa using multiple techniques. The focus of this guide is for Insum's internal Hackathon 2018 but can be used/leveraged for other purposes. This guide won't walk you through all the different options/possibilities of the Alexa API.
 
 There are a lot of moving parts when working with Alexa and it can get confusing at times. Please always keep the following in perspective when developing for Alexa:
+
+### FAQ
+
+To help with the hackathon we'll be maintaining an [FAQ](faq.md) document
 
 ### How Alexa Works
 
@@ -66,6 +70,7 @@ Title | Description
 --- | ---
 [Alexa Developer Home](https://developer.amazon.com/alexa) |
 [Skills Console](https://developer.amazon.com/alexa/console/ask) | Build, manage, test skills
+[Understanding How Users Invoke Custom Skills](https://developer.amazon.com/docs/custom-skills/understanding-how-users-invoke-custom-skills.html) | How to properly ask Alexa questions
 [Glitch](https://glitch.com/) | Create node.js apps online. No need to host your own server / manage https certificate. If you use this, sure to set the certificate type to Wildcard in the Endpoint definition.
 
 ## Definitions
