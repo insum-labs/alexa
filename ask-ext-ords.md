@@ -1,11 +1,13 @@
 # Create an Alexa Skill Powered by ORDS
 
-<!-- TOC -->
+<!-- TOC depthFrom:2 -->
+
 - [Alexa Basic Toolkit](#alexa-basic-toolkit)
 - [The REST Data Service](#the-rest-data-service)
-- [Handle the Intent](#handle-the-intent)
 - [Create the Skill](#create-the-skill)
+- [Handle the Intent](#handle-the-intent)
 - [Resources](#resources)
+
 <!-- /TOC -->
 
 ## Alexa Basic Toolkit
